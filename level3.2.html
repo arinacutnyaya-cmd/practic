@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Упражнение 2: Просмотр уведомлений</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body { 
+        font-family: sans-serif; 
+        background: #fafafa; 
+        padding: 40px; 
+    }
+    .container { 
+        max-width: 500px; 
+        margin: 0 auto; 
+    }
+    .notification-list { 
+        display: flex; 
+        flex-direction: column; 
+        gap: 12px; 
+        margin-top: 20px; 
+    }
+    
+    .notification-item { 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        padding: 16px; 
+        border-radius: 8px; 
+        color: white; 
+        font-size: 15px; 
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15); 
+    }
+    .info { 
+        background-color: #007bff; 
+    }
+    .success { 
+        background-color: #28a745;
+    }
+    .warning { 
+        background-color: #ffc107; 
+        color: #333; 
+    }
+    .close-btn { 
+        background: none; 
+        border: none; 
+        color: inherit; 
+        font-size: 20px; 
+        cursor: pointer; 
+        opacity: 0.7; 
+        font-weight: bold; 
+    }
+    .close-btn:hover { 
+        opacity: 1; 
+    }
+    .empty { 
+        text-align: center; 
+        color: #aaa; 
+        font-style: italic; 
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app" class="container">
+    <h2>Центр уведомлений</h2>
+
+    <div v-if="notifications.length > 0" class="notification-list">
+      <app-notification 
+        v-for="item in notifications" 
+        :key="item.id"
+        :message="item.text"
+        :type="item.type"
+        @close="removeNotification(item.id)"
+      ></app-notification>
+    </div>
+    
+    <p v-else class="empty">Все уведомления прочитаны!</p>
+  </div>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          notifications: [
+            { id: 1, text: 'Вы успешно загрузили проект на GitHub!', type: 'success' },
+            { id: 2, text: 'Новое задание доступно для проверки.', type: 'info' },
+            { id: 3, text: 'Внимание: Срок сдачи лабораторной работы истекает завтра.', type: 'warning' }
+          ]
+        }
+      },
+      methods: {
+        removeNotification(id) {
+          this.notifications = this.notifications.filter(n => n.id !== id);
+        }
+      }
+    });
+
+    app.component('app-notification', {
+      props: {
+        message: String,
+        type: {
+          type: String,
+          default: 'info'
+        }
+      },
+      template: `
+        <div :class="['notification-item', type]">
+          <span>{{ message }}</span>
+          <button @click="$emit('close')" class="close-btn">&times;</button>
+        </div>
+      `
+    });
+
+    app.mount('#app');
+  </script>
+
+</body>
+</html>
