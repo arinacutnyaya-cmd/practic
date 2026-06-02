@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Список дел на Vue.js 3</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  
+ 
+</head>
+<body>
+
+  <div id="app" class="todo-app">
+    <h1>Мой список дел</h1>
+    <form @submit.prevent="addTodo" class="input-form">
+      <input 
+        v-model.trim="newTodo" 
+        type="text" 
+        placeholder="Что нужно сделать?"
+      >
+      <button type="submit">Добавить</button>
+    </form>
+
+    <ul v-if="todos.length > 0">
+      <li v-for="todo in todos" :key="todo.id">
+        <input 
+          type="checkbox" 
+          v-model="todo.isDone"
+        >
+        
+        <span 
+          :class="{ completed: todo.isDone }" 
+          @click="todo.isDone = !todo.isDone"
+          class="todo-text"
+        >
+          {{ todo.text }}
+        </span>
+        <button @click="deleteTodo(todo.id)" class="delete-btn">Удалить</button>
+      </li>
+    </ul>
+
+    <p v-else class="empty-message">Список дел пуст. Отличная работа!</p>
+  </div>
+  
+ <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f7f6;
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .todo-app {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+    h1 {
+      color: #333;
+      margin-top: 0;
+      text-align: center;
+    }
+    .input-form {
+      display: flex;
+      margin-bottom: 20px;
+    }
+    .input-form input {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px 0 0 4px;
+      outline: none;
+    }
+    .input-form button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #42b983;
+      color: white;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+    }
+    .input-form button:hover {
+      background-color: #3aa876;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
+      background: #f9f9f9;
+      border-bottom: 1px solid #eee;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    .todo-text {
+      cursor: pointer;
+      flex: 1;
+      margin-left: 10px;
+    }
+    /* Класс для зачеркивания выполненных задач */
+    .completed {
+      text-decoration: line-through;
+      color: #888;
+    }
+    .delete-btn {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .delete-btn:hover {
+      background-color: #e60000;
+    }
+    .empty-message {
+      text-align: center;
+      color: #777;
+      font-style: italic;
+    }
+  </style>
+
+  <script>
+    const app = Vue.createApp({
+      data() {
+        return {
+          newTodo: '', 
+          todos: [
+            { id: 1, text: 'Посмотреть бесплатный курс Vue School', isDone: true },
+            { id: 2, text: 'Создать проект "Список дел"', isDone: false },
+            { id: 3, text: 'Загрузить код на GitHub', isDone: false }
+          ]
+        }
+      },
+      methods: {
+        addTodo() {
+          if (this.newTodo === '') return; 
+          
+          this.todos.push({
+            id: Date.now(), 
+            text: this.newTodo,
+            isDone: false
+          });
+          
+          this.newTodo = '';
+        },
+
+        deleteTodo(idToRemove) {
+          this.todos = this.todos.filter(todo => todo.id !== idToRemove);
+        }
+      }
+    });
+
+    app.mount('#app');
+  </script>
+
+</body>
+</html>
