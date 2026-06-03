@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Проект с использованием Vuetify 3</title>
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@3.5.2/dist/vuetify.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <div id="app">
+    <v-app class="bg-grey-lighten-4">
+      <v-main>
+        <v-container class="mt-10" style="max-width: 600px;">
+          
+          <v-card class="pa-6" elevation="3">
+            
+            <v-card-item class="text-center">
+              <v-card-title class="text-h4 font-weight-bold text-primary mb-2">
+                <v-icon icon="mdi-checkbox-marked-circle-outline" class="mr-2"></v-icon>
+                Мой Vuetify Список
+              </v-card-title>
+            </v-card-item>
+
+            <v-form @submit.prevent="addTodo" class="mb-6">
+              <v-row no-gutters align="center">
+                <v-col cols="9" class="pr-2">
+                  <v-text-field
+                    v-model.trim="newTodo"
+                    label="Что планируете сделать?"
+                    variant="outlined"
+                    color="primary"
+                    hide-details
+                    clearable
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="3">
+                  <v-btn 
+                    type="submit" 
+                    color="primary" 
+                    height="56" 
+                    block
+                    prepend-icon="mdi-plus"
+                  >
+                    Добавить
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-form>
+
+            <v-divider class="mb-4"></v-divider>
+
+            <v-list v-if="todos.length > 0" class="bg-transparent">
+              <v-list-item
+                v-for="todo in todos"
+                :key="todo.id"
+                class="mb-2 border rounded bg-white"
+                elevation="1"
+              >
+                <template v-slot:prepend>
+                  <v-checkbox-btn
+                    v-model="todo.isDone"
+                    color="success"
+                  ></v-checkbox-btn>
+                </template>
+
+                <v-list-item-title 
+                  :class="{ 'text-decoration-line-through text-grey': todo.isDone }"
+                  style="cursor: pointer; font-size: 16px;"
+                  @click="todo.isDone = !todo.isDone"
+                >
+                  {{ todo.text }}
+                </v-list-item-title>
+
+                <template v-slot:append>
+                  <v-btn
+                    icon="mdi-delete"
+                    variant="text"
+                    color="error"
+                    @click="deleteTodo(todo.id)"
+                  ></v-btn>
+                </template>
+              </v-list-item>
+            </v-list>
+
+            <v-alert
+              v-else
+              type="success"
+              variant="tonal"
+              text="Все дела завершены! Отличный день, чтобы отдохнуть."
+              icon="mdi-emoticon-happy-outline"
+              class="text-center"
+            ></v-alert>
+
+          </v-card>
+
+        </v-container>
+      </v-main>
+    </v-app>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@3.5.2/dist/vuetify.min.js"></script>
+
+  <script>
+    const { createVuetify } = Vuetify;
+    const vuetify = createVuetify();
+
+    const app = Vue.createApp({
+      data() {
+        return {
+          newTodo: '',
+          todos: [
+            { id: 1, text: 'Подключить Vuetify 3 через CDN', isDone: true },
+            { id: 2, text: 'Изучить документацию компонентов v-card и v-btn', isDone: true },
+            { id: 3, text: 'Загрузить красивое решение на GitHub', isDone: false }
+          ]
+        }
+      },
+      methods: {
+        addTodo() {
+          if (this.newTodo === '') return;
+          
+          this.todos.push({
+            id: Date.now(),
+            text: this.newTodo,
+            isDone: false
+          });
+          this.newTodo = '';
+        },
+        deleteTodo(idToRemove) {
+          this.todos = this.todos.filter(todo => todo.id !== idToRemove);
+        }
+      }
+    });
+
+    app.use(vuetify);
+    app.mount('#app');
+  </script>
+
+</body>
+</html>
