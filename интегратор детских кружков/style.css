@@ -9,7 +9,6 @@ body {
   color: #333;
 }
 
-/* Шапка */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -48,7 +47,6 @@ body {
   font-weight: 900;
 }
 
-/* Основной контейнер */
 .main-container {
   padding: 30px;
   max-width: 1400px;
@@ -60,7 +58,6 @@ body {
   gap: 30px;
 }
 
-/* Компоненты карточек */
 .card {
   background: white;
   border-radius: 16px;
@@ -78,7 +75,6 @@ body {
   margin: 12px 0;
 }
 
-/* Элементы форм */
 .form-group {
   margin-bottom: 15px;
 }
@@ -105,14 +101,12 @@ body {
   accent-color: #4a148c;
 }
 
-/* Карта */
 #map {
   height: 250px;
   border-radius: 12px;
   margin-top: 10px;
 }
 
-/* Правая сторона */
 .content-header {
   display: flex;
   justify-content: space-between;
@@ -195,7 +189,6 @@ body {
   margin-top: 10px;
 }
 
-/* Кнопки */
 .btn {
   padding: 10px 16px;
   border: none;
@@ -219,7 +212,6 @@ body {
   background: #f3e5f5;
 }
 
-/* Модальное окно */
 .modal-overlay {
   position: fixed;
   top:0; left:0; right:0; bottom:0;
