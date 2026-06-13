@@ -56,7 +56,6 @@
       const bContainer = document.getElementById('bookings-list');
       const nContainer = document.getElementById('notes-list');
 
-      // Вывод заявок
       bContainer.innerHTML = '';
       if (bookings.length === 0) {
         bContainer.innerHTML = `<div class="empty-msg">Вы еще не отправляли заявлений. Выберите кружок в каталоге.</div>`;
@@ -77,7 +76,6 @@
         });
       }
 
-      // Вывод алертов
       nContainer.innerHTML = '';
       if (notes.length === 0) {
         nContainer.innerHTML = `<div class="empty-msg">Уведомлений нет.</div>`;
@@ -92,7 +90,6 @@
         });
       }
 
-      // Обновление цифры в шапке
       const unreadCount = notes.filter(n => n.unread).length;
       const badge = document.getElementById('badge');
       badge.innerText = unreadCount;
