@@ -100,7 +100,6 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    // Инициализация общей базы данных в localStorage, если её там нет
     const defaultClubs = [
       { id: 1, title: "Секция робототехники 'Lego-Master'", category: "Наука и IT", ageMin: 6, ageMax: 12, address: "ул. Ленина, д. 14", schedule: "Пн, Ср с 15:00", price: 3200, coords: [52.283, 104.285], rating: 4.8, phone: "+7 (3952) 55-01-01", reviews: "Ребенок в восторге, сам собирает роботов!" },
       { id: 2, title: "Школа спортивного плавания 'Дельфин'", category: "Спорт", ageMin: 5, ageMax: 16, address: "ул. Сергеева, д. 3/1", schedule: "Вт, Чт, Сб с 16:30", price: 4500, coords: [52.256, 104.238], rating: 5.0, phone: "+7 (3952) 66-12-34", reviews: "Профессиональный тренерский состав!" },
@@ -120,7 +119,6 @@
     let currentClubForBooking = null;
     let map, markers = [];
 
-    // Элементы DOM
     const searchTxt = document.getElementById('search-text');
     const searchCat = document.getElementById('search-category');
     const searchAge = document.getElementById('search-age');
@@ -128,7 +126,6 @@
     const container = document.getElementById('clubs-container');
     const countLabel = document.getElementById('club-count');
 
-    // Функция обновления счетчика уведомлений в шапке
     function updateBadge() {
       const notes = JSON.parse(localStorage.getItem('notifications') || '[]');
       const unread = notes.filter(n => n.unread).length;
@@ -137,7 +134,6 @@
       b.style.display = unread > 0 ? 'inline-block' : 'none';
     }
 
-    // Инициализация карты
     function initMap() {
       map = L.map('map').setView([52.2855, 104.2890], 11);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -145,7 +141,6 @@
       }).addTo(map);
     }
 
-    // Рендеринг карточек и маркеров с фильтрацией
     function render() {
       const clubs = JSON.parse(localStorage.getItem('clubs'));
       const text = searchTxt.value.toLowerCase();
@@ -153,7 +148,6 @@
       const age = parseInt(searchAge.value);
       ageVal.innerText = age;
 
-      // Очистка карты
       markers.forEach(m => map.removeLayer(m));
       markers = [];
       container.innerHTML = '';
@@ -173,7 +167,6 @@
       }
 
       filtered.forEach(club => {
-        // Создание карточки
         const card = document.createElement('div');
         card.className = 'club-card';
         card.innerHTML = `
@@ -194,13 +187,11 @@
         `;
         container.appendChild(card);
 
-        // Добавление маркера на карту
         const m = L.marker(club.coords).addTo(map).bindPopup(`<b>${club.title}</b><br>${club.address}`);
         markers.push(m);
       });
     }
 
-    // Управление модальным окном
     function openModal(id) {
       const clubs = JSON.parse(localStorage.getItem('clubs'));
       currentClubForBooking = clubs.find(c => c.id === id);
@@ -212,7 +203,6 @@
       document.getElementById('modal-order').classList.remove('active');
     }
 
-    // Сохранение записи в localStorage
     function submitBooking() {
       const parent = document.getElementById('form-parent').value;
       const child = document.getElementById('form-child').value;
@@ -233,7 +223,6 @@
       });
       localStorage.setItem('bookings', JSON.stringify(bookings));
 
-      // Добавление системного уведомления
       const notes = JSON.parse(localStorage.getItem('notifications') || '[]');
       notes.unshift({
         id: Date.now(),
@@ -246,18 +235,15 @@
       closeModal();
       updateBadge();
       
-      // Очистка формы
       document.getElementById('form-parent').value = '';
       document.getElementById('form-child').value = '';
       document.getElementById('form-age').value = '';
     }
 
-    // Слушатели событий
     searchTxt.addEventListener('input', render);
     searchCat.addEventListener('change', render);
     searchAge.addEventListener('input', render);
 
-    // Запуск
     window.onload = () => {
       initMap();
       render();
