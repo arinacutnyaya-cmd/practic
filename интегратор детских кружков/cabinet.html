@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кружки38 — Личный кабинет</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="cabinet.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">Кружки<span>38</span></div>
+    <nav class="menu">
+      <a href="index.html">Каталог</a>
+      <a href="recommendations.html">Подбор</a>
+      <a href="cabinet.html" class="active">Кабинет <span id="badge" class="badge">0</span></a>
+      <a href="about.html">О сервисе</a>
+    </nav>
+  </header>
+
+  <main class="main-container">
+    <div class="cabinet-layout">
+      
+      <section class="cabinet-block">
+        <div class="card h-100">
+          <h3 class="card-title"><i class="mdi mdi-bookmark-check-outline"></i> Поданные заявления на запись</h3>
+          <hr class="divider">
+          <div id="bookings-list">
+            </div>
+        </div>
+      </section>
+
+      <aside class="cabinet-block">
+        <div class="card h-100">
+          <div class="title-space">
+            <h3 class="card-title"><i class="mdi mdi-bell-ring-outline"></i> Уведомления</h3>
+            <button class="btn-clear" onclick="clearNotifications()">Прочитать все</button>
+          </div>
+          <hr class="divider">
+          <div id="notes-list">
+            </div>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <script>
+    function loadCabinet() {
+      const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+      const notes = JSON.parse(localStorage.getItem('notifications') || '[]');
+      
+      const bContainer = document.getElementById('bookings-list');
+      const nContainer = document.getElementById('notes-list');
+
+      // Вывод заявок
+      bContainer.innerHTML = '';
+      if (bookings.length === 0) {
+        bContainer.innerHTML = `<div class="empty-msg">Вы еще не отправляли заявлений. Выберите кружок в каталоге.</div>`;
+      } else {
+        bookings.forEach(b => {
+          const item = document.createElement('div');
+          item.className = 'booking-item';
+          item.innerHTML = `
+            <h4>${b.clubTitle}</h4>
+            <p>Заявитель: <b>${b.parentName}</b></p>
+            <p>Ребенок: <b>${b.childName}</b></p>
+            <div class="status-row">
+              <span class="status-badge">Принято ведомством</span>
+              <span class="date-label">${b.date}</span>
+            </div>
+          `;
+          bContainer.appendChild(item);
+        });
+      }
+
+      // Вывод алертов
+      nContainer.innerHTML = '';
+      if (notes.length === 0) {
+        nContainer.innerHTML = `<div class="empty-msg">Уведомлений нет.</div>`;
+      } else {
+        notes.forEach(n => {
+          const item = document.createElement('div');
+          item.className = `note-item ${n.unread ? 'unread' : ''}`;
+          item.innerHTML = `
+            <p>${n.text}</p>
+          `;
+          nContainer.appendChild(item);
+        });
+      }
+
+      // Обновление цифры в шапке
+      const unreadCount = notes.filter(n => n.unread).length;
+      const badge = document.getElementById('badge');
+      badge.innerText = unreadCount;
+      badge.style.display = unreadCount > 0 ? 'inline-block' : 'none';
+    }
+
+    function clearNotifications() {
+      const notes = JSON.parse(localStorage.getItem('notifications') || '[]');
+      notes.forEach(n => n.unread = false);
+      localStorage.setItem('notifications', JSON.stringify(notes));
+      loadCabinet();
+    }
+
+    window.onload = loadCabinet;
+  </script>
+</body>
+</html>

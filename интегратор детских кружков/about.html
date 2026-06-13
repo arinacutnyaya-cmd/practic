@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кружки38 — О проекте</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="about.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">Кружки<span>38</span></div>
+    <nav class="menu">
+      <a href="index.html">Каталог</a>
+      <a href="recommendations.html">Подбор</a>
+      <a href="cabinet.html">Кабинет <span id="badge" class="badge">0</span></a>
+      <a href="about.html" class="active">О сервисе</a>
+    </nav>
+  </header>
+
+  <main class="main-container max-800">
+    <div class="card info-card">
+      <h2>О платформе Кружки38</h2>
+      <p class="lead">Единая информационная экосистема для быстрого поиска дополнительных образовательных программ и мгновенной электронной записи.</p>
+      
+      <h3 class="section-title"><i class="mdi mdi-star-circle-outline"></i> Ключевые преимущества</h3>
+      <div class="features-list">
+        <div class="feat-item">
+          <i class="mdi mdi-clock-fast"></i>
+          <div>
+            <h4>Экономия времени</h4>
+            <p>Платформа исключает необходимость ручного поиска информации на сторонних ресурсах.</p>
+          </div>
+        </div>
+        <div class="feat-item">
+          <i class="mdi mdi-integrated-circuit-chip"></i>
+          <div>
+            <h4>Удобство единого окна</h4>
+            <p>Поиск, чтение отзывов, изучение расписания и подача документов происходят внутри одного интерфейса.</p>
+          </div>
+        </div>
+        <div class="feat-item">
+          <i class="mdi mdi-security"></i>
+          <div>
+            <h4>Круглосуточная доступность</h4>
+            <p>Сервис работает непрерывно на любых типах мобильных и десктопных устройств.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-title"><i class="mdi mdi-account-group-outline"></i> Целевая аудитория</h3>
+      <table class="target-table">
+        <thead>
+          <tr>
+            <th>Группа пользователей</th>
+            <th>Основная ценность продукта</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Родители</b></td>
+            <td>Быстрый подбор безопасных и полезных кружков рядом с домом.</td>
+          </tr>
+          <tr>
+            <td><b>Дети</b></td>
+            <td>Поиск современных увлечений, трендов и возможностей для развития.</td>
+          </tr>
+          <tr>
+            <td><b>Педагоги и руководители</b></td>
+            <td>Эффективный инструмент для автоматического привлечения новых учеников.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    function updateBadge() {
+      const notes = JSON.parse(localStorage.getItem('notifications') || '[]');
+      const unread = notes.filter(n => n.unread).length;
+      const b = document.getElementById('badge');
+      b.innerText = unread;
+      b.style.display = unread > 0 ? 'inline-block' : 'none';
+    }
+    window.onload = updateBadge;
+  </script>
+</body>
+</html>

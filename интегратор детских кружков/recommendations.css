@@ -1,0 +1,55 @@
+.promo-banner {
+  background: linear-gradient(135deg, #4a148c 0%, #311b92 100%);
+  color: white;
+  border-radius: 24px;
+  padding: 40px;
+  text-align: center;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 20px rgba(74, 20, 140, 0.15);
+}
+.icon-box {
+  font-size: 48px;
+  color: #ffb74d;
+  margin-bottom: 10px;
+}
+.promo-banner h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  font-weight: 900;
+}
+.promo-banner p {
+  color: #b39ddb;
+  font-size: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.wizard-card {
+  padding: 25px;
+}
+.inputs-inline {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+}
+.flex-1 { flex: 1; }
+.btn-align {
+  margin-bottom: 15px;
+}
+.results-section h3 {
+  color: #4a148c;
+  margin: 30px 0 20px 0;
+}
+.info-alert {
+  grid-column: 1 / -1;
+  border: 2px dashed #b39ddb;
+  color: #512da8;
+  padding: 30px;
+  text-align: center;
+  border-radius: 16px;
+  background: #f3e5f5;
+  font-weight: 500;
+}
+.rec-chip {
+  background: #e8f5e9 !important;
+  color: #2e7d32 !important;
+}

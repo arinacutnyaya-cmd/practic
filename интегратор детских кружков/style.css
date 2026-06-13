@@ -1,0 +1,267 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f3f8;
+  color: #333;
+}
+
+/* Шапка */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  background-color: #4a148c;
+  color: white;
+  padding: 15px 40px;
+  box-shadow: 0 4px 12px rgba(74, 20, 140, 0.2);
+}
+.logo {
+  font-size: 24px;
+  font-weight: 900;
+}
+.logo span {
+  color: #ffb74d;
+}
+.menu a {
+  color: #e1bee7;
+  text-decoration: none;
+  font-weight: 700;
+  margin-left: 20px;
+  padding: 12px 8Ыpx;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+.menu a:hover, .menu a.active {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.badge {
+  background-color: #ffb74d;
+  color: #4a148c;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-weight: 900;
+}
+
+/* Основной контейнер */
+.main-container {
+  padding: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.grid-layout {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 30px;
+}
+
+/* Компоненты карточек */
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.card-title {
+  color: #4a148c;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+.divider {
+  border: 0;
+  border-top: 1px solid #e0e0e0;
+  margin: 12px 0;
+}
+
+/* Элементы форм */
+.form-group {
+  margin-bottom: 15px;
+}
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #666;
+  margin-bottom: 6px;
+}
+.form-group input[type="text"], .form-group input[type="number"], .form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+.form-group input:focus, .form-group select:focus {
+  border-color: #4a148c;
+  outline: none;
+}
+.form-group input[type="range"] {
+  width: 100%;
+  accent-color: #4a148c;
+}
+
+/* Карта */
+#map {
+  height: 250px;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+
+/* Правая сторона */
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.content-header h2 {
+  color: #2a085c;
+}
+.counter {
+  background: #eaecf5;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  color: #4a148c;
+}
+
+.clubs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+.club-card {
+  background: white;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  transition: 0.2s;
+}
+.club-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(74, 20, 140, 0.1);
+}
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.chip {
+  background: #f3e5f5;
+  color: #4a148c;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.rating {
+  color: #ffb74d;
+  font-weight: bold;
+}
+.club-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #222;
+}
+.club-info {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 6px;
+}
+.club-info i {
+  color: #7b1fa2;
+}
+.club-price {
+  font-size: 20px;
+  font-weight: bold;
+  color: #4a148c;
+  margin-top: auto;
+  padding-top: 10px;
+}
+.club-price span {
+  font-size: 12px;
+  color: #999;
+}
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* Кнопки */
+.btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+}
+.btn-flat {
+  background-color: #4a148c;
+  color: white;
+}
+.btn-flat:hover {
+  background-color: #6a1b9a;
+}
+.btn-text {
+  background: transparent;
+  color: #7b1fa2;
+}
+.btn-text:hover {
+  background: #f3e5f5;
+}
+
+/* Модальное окно */
+.modal-overlay {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: 0.2s;
+  z-index: 9999;
+}
+.modal-overlay.active {
+  opacity: 1; pointer-events: auto;
+}
+.modal {
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 450px;
+}
+.modal-title {
+  color: #4a148c;
+  margin-bottom: 5px;
+}
+.modal-subtitle {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 20px;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+.alert {
+  grid-column: 1 / -1;
+  background: #f3e5f5;
+  color: #4a148c;
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+}
+.mt-20 { margin-top: 20px; }

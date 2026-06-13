@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кружки38 — Умный подбор</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="recommendations.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">Кружки<span>38</span></div>
+    <nav class="menu">
+      <a href="index.html">Каталог</a>
+      <a href="recommendations.html" class="active">Подбор</a>
+      <a href="cabinet.html">Кабинет <span id="badge" class="badge">0</span></a>
+      <a href="about.html">О сервисе</a>
+    </nav>
+  </header>
+
+  <main class="main-container">
+    <div class="promo-banner">
+      <div class="icon-box"><i class="mdi mdi-auto-fix"></i></div>
+      <h2>Умный Ассистент подбора</h2>
+      <p>Укажите точные параметры вашего ребенка, и алгоритм мгновенно сформирует персональные рекомендации.</p>
+    </div>
+
+    <div class="wizard-card card">
+      <div class="inputs-inline">
+        <div class="form-group flex-1">
+          <label>Возраст ребенка</label>
+          <input type="number" id="rec-age" placeholder="Укажите возраст (например, 12)">
+        </div>
+        <div class="form-group flex-1">
+          <label>Желаемое направление</label>
+          <select id="rec-cat">
+            <option value="Все">Любое направление</option>
+            <option value="Спорт">Спорт</option>
+            <option value="Наука и IT">Наука и IT</option>
+            <option value="Искусство">Искусство</option>
+            <option value="Языки">Языки</option>
+          </select>
+        </div>
+        <div class="form-group btn-align">
+          <button class="btn btn-flat" onclick="generateRecommendations()"><i class="mdi mdi-lightning-bolt"></i> Найти траектории</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="results-section">
+      <h3>Рекомендованные программы обучения:</h3>
+      <div class="clubs-grid" id="rec-container">
+        <div class="info-alert">Введите возраст и выберите интересы выше, чтобы запустить расчет рекомендаций.</div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function updateBadge() {
+      const notes = JSON.parse(localStorage.getItem('notifications') || '[]');
+      const unread = notes.filter(n => n.unread).length;
+      const b = document.getElementById('badge');
+      b.innerText = unread;
+      b.style.display = unread > 0 ? 'inline-block' : 'none';
+    }
+
+    function generateRecommendations() {
+      const ageInput = document.getElementById('rec-age').value;
+      const cat = document.getElementById('rec-cat').value;
+      const container = document.getElementById('rec-container');
+
+      if (!ageInput) {
+        alert('Пожалуйста, введите возраст ребенка.');
+        return;
+      }
+      const age = parseInt(ageInput);
+
+      const clubs = JSON.parse(localStorage.getItem('clubs') || '[]');
+      const filtered = clubs.filter(club => {
+        const matchAge = (age >= club.ageMin && age <= club.ageMax);
+        const matchCat = (cat === 'Все' || club.category === cat);
+        return matchAge && matchCat;
+      });
+
+      container.innerHTML = '';
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="alert">К сожалению, по данным критериям точных совпадений нет. Попробуйте изменить категорию.</div>`;
+        return;
+      }
+
+      filtered.forEach(club => {
+        const card = document.createElement('div');
+        card.className = 'club-card';
+        card.innerHTML = `
+          <div class="card-meta">
+            <span class="chip rec-chip">Идеальное совпадение</span>
+            <span class="rating"><i class="mdi mdi-star"></i> ${club.rating}</span>
+          </div>
+          <h4 class="club-title">${club.title}</h4>
+          <p class="club-info"><b>Направление:</b> ${club.category}</p>
+          <p class="club-info"><b>Рассчитан на:</b> ${club.ageMin}-${club.ageMax} лет</p>
+          <p class="club-info"><i class="mdi mdi-map-marker-outline"></i> ${club.address}</p>
+          <div class="club-price">${club.price} ₽ <span>/ мес.</span></div>
+          <hr class="divider">
+          <a href="index.html" class="btn btn-flat text-center" style="text-align:center; text-decoration:none; display:block;">Открыть в каталоге</a>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    window.onload = updateBadge;
+  </script>
+</body>
+</html>

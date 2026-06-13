@@ -1,0 +1,79 @@
+.cabinet-layout {
+  display: grid;
+  grid-template-columns: 1fr 450px;
+  gap: 30px;
+}
+.h-100 { height: 100%; min-height: 500px; }
+.title-space {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.btn-clear {
+  background: transparent;
+  border: none;
+  color: #7b1fa2;
+  font-weight: bold;
+  cursor: pointer;
+}
+.btn-clear:hover { text-decoration: underline; }
+
+/* Элементы заявок */
+.booking-item {
+  background: #f3e5f5;
+  border-left: 5px solid #4a148c;
+  padding: 15px;
+  border-radius: 4px 12px 12px 4px;
+  margin-bottom: 15px;
+}
+.booking-item h4 {
+  color: #4a148c;
+  margin-bottom: 8px;
+}
+.booking-item p {
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #444;
+}
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+.status-badge {
+  background: #2e7d32;
+  color: white;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+.date-label {
+  font-size: 11px;
+  color: #777;
+}
+
+/* Элементы алертов */
+.note-item {
+  background: white;
+  border: 1px solid #e0e0e0;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #555;
+}
+.note-item.unread {
+  background: #fce4ec;
+  border-color: #f8bbd0;
+  color: #880e4f;
+  font-weight: 500;
+}
+.empty-msg {
+  text-align: center;
+  color: #999;
+  padding: 40px 20px;
+  font-size: 14px;
+}
